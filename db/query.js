@@ -24,3 +24,10 @@ async function decreaseItemQuantity({ id, upc, quantitySold }) {
 
   await pool.query(query, params);
 }
+
+async function getAllCategoryNames() {
+  const { rows } = await pool.query("SELECT name FROM categories");
+  return rows;
+}
+
+module.exports = { getAllCategoryNames };
