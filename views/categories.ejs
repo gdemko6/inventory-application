@@ -2,10 +2,15 @@
   <body>
     <h1>Categories</h1>
     <ul>
-      <% console.log(categories) %>
       <% categories.forEach(category => { %>
-        <li><%= category.name %></li>
+        <li>
+          <%= category.name %>
+          <a href="/categories/<%= category.name %>">
+            <button>View Category</button>
+          </a>
+        </li>
       <% }); %>
     </ul>
   </body>
 </html>
+

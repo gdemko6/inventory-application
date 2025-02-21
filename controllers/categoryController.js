@@ -5,4 +5,9 @@ async function getAllCategories(req, res) {
     res.render("categories", { categories });
 }
 
-module.exports = { getAllCategories };
+async function getCategoryItems(req, res) {
+    const items = await db.getAllItemNamesByCategory(req.params.name);
+    res.render("items", { items })
+}
+
+module.exports = { getAllCategories, getCategoryItems };

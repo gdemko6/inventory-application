@@ -5,8 +5,8 @@ const categoryController = require("../controllers/categoryController");
 // Show all categories
 router.get("/", categoryController.getAllCategories);
 
-// // Show items in a specific category (e.g., /categories/football)
-// router.get("/:name", categoryController.getCategoryItems);
+// Show items in a specific category (e.g., /categories/football)
+router.get("/:name", categoryController.getCategoryItems);
 
 // // Form to add a new item to a category
 // router.get("/:name/add", (req, res) => {
