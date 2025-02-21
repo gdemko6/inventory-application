@@ -30,12 +30,12 @@ async function getAllCategoryNames() {
   return rows;
 }
 
-async function getAllItemNamesByCategory(category) {
+async function getAllItemsByCategory(category) {
   const { rows } = await pool.query(
-      "SELECT name FROM items WHERE category_id = (SELECT id FROM categories WHERE name = $1)",
+      "SELECT * FROM items WHERE category_id = (SELECT id FROM categories WHERE name = $1)",
       [category]
   );
   return rows;
 }
 
-module.exports = { getAllCategoryNames, getAllItemNamesByCategory };
+module.exports = { getAllCategoryNames, getAllItemsByCategory };

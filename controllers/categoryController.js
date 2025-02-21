@@ -6,7 +6,7 @@ async function getAllCategories(req, res) {
 }
 
 async function getCategoryItems(req, res) {
-    const items = await db.getAllItemNamesByCategory(req.params.name);
+    const items = await db.getAllItemsByCategory(req.params.name);
     res.render("items", { items })
 }
 
