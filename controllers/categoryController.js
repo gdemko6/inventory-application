@@ -6,8 +6,9 @@ async function getAllCategories(req, res) {
 }
 
 async function getCategoryItems(req, res) {
+    const categoryName = req.params.name;
     const items = await db.getAllItemsByCategory(req.params.name);
-    res.render("items", { items })
+    res.render("items", { categoryName, items })
 }
 
 module.exports = { getAllCategories, getCategoryItems };
