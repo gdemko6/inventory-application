@@ -7,17 +7,21 @@ async function getItemByName(name) {
   return rows.length ? rows[0] : null;
 }
 
-async function decreaseItemQuantity({ id, upc, quantitySold }) {
+async function increaseItemQuantity(id, quantity) {
+  await pool.query("UPDATE items SET quantity = quantity + $1 WHERE id = $2", [quantity, id]);
+}
+
+async function decreaseItemQuantity({ id, upc, quantity }) {
   let query, params;
 
   if (upc) {
     query =
       "UPDATE items SET quantity = quantity - $1 WHERE upc = $2 AND quantity >= $1";
-    params = [quantitySold, upc];
+    params = [quantity, upc];
   } else if (id) {
     query =
       "UPDATE items SET quantity = quantity - $1 WHERE id = $2 AND quantity >= $1";
-    params = [quantitySold, id];
+    params = [quantity, id];
   } else {
     throw new Error("Either UPC or ID must be provided.");
   }
@@ -38,4 +42,4 @@ async function getAllItemsByCategory(category) {
   return rows;
 }
 
-module.exports = { getAllCategoryNames, getAllItemsByCategory };
+module.exports = { getAllCategoryNames, getAllItemsByCategory, increaseItemQuantity, decreaseItemQuantity };

@@ -1,10 +1,51 @@
 <html>
     <body>
-        <h1>Items in category: <%= categoryName.charAt(0).toUpperCase() + categoryName.slice(1) %> </h1>
+        <h1>Items in category: <%= categoryName %> </h1>
         <ul>
             <% items.forEach(item => { %>
-                <li>ID: <%= item.id %> Name: <%= item.name %> Quantity: <%= item.quantity %> Price: <%= item.price %></li>
-            <% }) %>
+                <li>
+                    ID: <%= item.id %> 
+                    Name: <%= item.name %> 
+                    Price: <%= item.price %> 
+                    
+                    <!-- Quantity Control -->
+                    <form id="form-<%= item.id %>" action="/categories/<%= categoryName %>" method="POST">
+                        <input type="hidden" name="id" value="<%= item.id %>">
+                        <input type="hidden" name="action" id="action-<%= item.id %>">
+
+                        <button type="button" onclick="changeQuantity('<%= item.id %>', -1)">-</button>
+                        <input type="number" name="quantity" id="quantity-<%= item.id %>" value="<%= item.quantity %>" min="0">
+                        <button type="button" onclick="changeQuantity('<%= item.id %>', 1)">+</button>
+
+                        <button type="submit">Submit</button>
+                    </form>
+                </li>
+            <% }); %>
         </ul>
+
+        <script>
+            function changeQuantity(itemId, change) {
+                let inputField = document.getElementById(`quantity-${itemId}`);
+                let currentValue = parseInt(inputField.value) || 0;
+                let newValue = currentValue + change;
+                if (newValue >= 0) {
+                    inputField.value = newValue;
+                }
+            }
+
+            document.querySelectorAll("form").forEach(form => {
+                form.addEventListener("submit", function (event) {
+                    let itemId = this.querySelector("input[name='id']").value;
+                    let quantityField = document.getElementById(`quantity-${itemId}`);
+                    let actionField = document.getElementById(`action-${itemId}`);
+
+                    if (parseInt(quantityField.value) > parseInt(quantityField.defaultValue)) {
+                        actionField.value = "increase";
+                    } else {
+                        actionField.value = "decrease";
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

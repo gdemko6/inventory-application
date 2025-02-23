@@ -1,12 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const categoryController = require("../controllers/categoryController");
+const itemController = require("../controllers/itemController");
 
 // Show all categories
 router.get("/", categoryController.getAllCategories);
 
 // Show items in a specific category (e.g., /categories/football)
 router.get("/:name", categoryController.getCategoryItems);
+
+router.post("/:name", itemController.changeItemQuantity);
 
 // // Form to add a new item to a category
 // router.get("/:name/add", (req, res) => {
